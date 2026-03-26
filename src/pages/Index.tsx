@@ -145,8 +145,8 @@ const Index = () => {
                 <Monitor className="text-primary" size={22} />
               </div>
               <div className="flex flex-col">
-                <h1 className="text-xl font-bold tracking-tight leading-tight">Gestão de Computadores</h1>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Rede Dra. Fernanda Sarelli</p>
+                <h1 className="text-xl font-bold tracking-tight leading-tight">Painel de Computadores</h1>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Sistema de Gestão Política</p>
               </div>
             </div>
             

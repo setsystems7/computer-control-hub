@@ -52,9 +52,10 @@ const Index = () => {
 
   const checkStatuses = useCallback(async () => {
     if (!canEmbedInPanel) {
-      const fallback: Record<string, "online" | "offline" | "checking"> = {};
-      machines.forEach((m) => (fallback[m.ip] = "checking"));
-      setStatuses(fallback);
+      // Em HTTPS não conseguimos verificar HTTP — assumir disponível
+      const assumed: Record<string, "online" | "offline" | "checking"> = {};
+      machines.forEach((m) => (assumed[m.ip] = "online"));
+      setStatuses(assumed);
       setLastCheck(new Date());
       return;
     }
@@ -81,78 +82,16 @@ const Index = () => {
     checkStatuses();
     const t = setInterval(checkStatuses, 30000);
     return () => clearInterval(t);
-  }, []);
-
-  const autoLoginAndOpen = async (machine: Machine, target: "_blank" | "iframe") => {
-    if (statuses[machine.ip] === "offline") {
-      toast({
-        title: "Máquina Offline",
-        description: `Não é possível conectar a ${machine.name}. Verifique se ela está ligada.`,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const baseUrl = getMachineUrl(machine);
-
-    if (isPublicHttps) {
-      window.open(baseUrl, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    setConnectingMachine(machine.ip);
-
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 3000);
-      const res = await fetch(`${baseUrl}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: FB_USER, password: FB_PASS }),
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
-      
-      setConnectingMachine(null);
-
-      if (res.ok) {
-        const token = await res.text();
-        const authedUrl = `${baseUrl}/?auth=${encodeURIComponent(token)}`;
-        if (target === "_blank") {
-          window.open(authedUrl, "_blank", "noopener,noreferrer");
-        } else {
-          setAuthToken(token);
-          setActiveMachine(machine);
-          setIsFullscreen(false);
-          setIframeKey((k) => k + 1);
-        }
-        return;
-      }
-    } catch {
-      setConnectingMachine(null);
-      toast({
-        title: "Erro de Conexão",
-        description: `Falha ao conectar na interface web da ${machine.name}.`,
-        variant: "destructive",
-      });
-      setStatuses(prev => ({ ...prev, [machine.ip]: "offline" }));
-      return;
-    }
-
-    if (target === "_blank") {
-      window.open(baseUrl, "_blank", "noopener,noreferrer");
-    } else {
-      setAuthToken(null);
-      setActiveMachine(machine);
-      setIsFullscreen(false);
-      setIframeKey((k) => k + 1);
-    }
-  };
+  }, [checkStatuses]);
 
   const openPanel = (machine: Machine) => {
     const baseUrl = getMachineUrl(machine);
-    // Always open in new tab — HTTPS pages cannot embed HTTP iframes
+    // Sempre abrir em nova aba — seguro em qualquer contexto
     window.open(baseUrl, "_blank", "noopener,noreferrer");
+    toast({
+      title: "Abrindo " + machine.name,
+      description: "Certifique-se de estar conectado à rede ZeroTier.",
+    });
   };
 
   const copyToClipboard = useCallback((text: string, label: string) => {

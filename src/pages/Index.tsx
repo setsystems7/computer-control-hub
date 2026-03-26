@@ -150,11 +150,9 @@ const Index = () => {
   };
 
   const openPanel = (machine: Machine) => {
-    if (!canEmbedInPanel) {
-      autoLoginAndOpen(machine, "_blank");
-      return;
-    }
-    autoLoginAndOpen(machine, "iframe");
+    const baseUrl = getMachineUrl(machine);
+    // Always open in new tab — HTTPS pages cannot embed HTTP iframes
+    window.open(baseUrl, "_blank", "noopener,noreferrer");
   };
 
   const copyToClipboard = useCallback((text: string, label: string) => {
@@ -354,6 +352,15 @@ const Index = () => {
                       onClick={() => window.open(`anydesk:${anydeskMachine.anydeskId}`, "_self")}
                     >
                       Abrir Aplicativo AnyDesk
+                    </Button>
+
+                    <Button
+                      variant="outline"
+                      className="w-full h-12 rounded-xl text-sm font-semibold border-primary/20 hover:border-primary/50"
+                      onClick={() => window.open(`https://my.anydesk.com/v2`, "_blank", "noopener,noreferrer")}
+                    >
+                      <ExternalLink size={16} className="mr-2 text-primary" />
+                      Abrir AnyDesk Web (sem instalar)
                     </Button>
                     
                     <div className="p-3 bg-white/5 border border-white/10 rounded-xl space-y-3">

@@ -281,7 +281,7 @@ const Index = () => {
 
           {/* Additional text requested */}
           <div className="pt-6 pb-2 text-center w-full">
-            <p className="text-[11px] text-muted-foreground">Sistema protegido. <span className="opacity-60">mas anda pode para de funconar</span></p>
+            <p className="text-[11px] text-muted-foreground">Sistema protegido. <span className="opacity-60">Monitoramento em tempo real.</span></p>
           </div>
         </main>
 

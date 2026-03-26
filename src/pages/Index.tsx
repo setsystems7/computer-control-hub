@@ -150,11 +150,9 @@ const Index = () => {
   };
 
   const openPanel = (machine: Machine) => {
-    if (!canEmbedInPanel) {
-      autoLoginAndOpen(machine, "_blank");
-      return;
-    }
-    autoLoginAndOpen(machine, "iframe");
+    const baseUrl = getMachineUrl(machine);
+    // Always open in new tab — HTTPS pages cannot embed HTTP iframes
+    window.open(baseUrl, "_blank", "noopener,noreferrer");
   };
 
   const copyToClipboard = useCallback((text: string, label: string) => {

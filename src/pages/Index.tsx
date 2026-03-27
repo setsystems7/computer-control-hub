@@ -84,8 +84,14 @@ const Index = () => {
 
   const openPanel = (machine: Machine) => {
     const baseUrl = getMachineUrl(machine);
-    // Sempre abrir em nova aba — seguro em qualquer contexto
-    window.open(baseUrl, "_blank", "noopener,noreferrer");
+    // Criar link temporário para evitar bloqueio de popup
+    const link = document.createElement("a");
+    link.href = baseUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     toast({
       title: "Abrindo " + machine.name,
       description: "Certifique-se de estar conectado à rede ZeroTier.",

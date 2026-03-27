@@ -369,7 +369,7 @@ const Index = () => {
                 <div className="flex-1 relative bg-black">
                   <iframe
                     key={iframeKey}
-                    src={`${getMachineUrl(activeMachine)}${authToken ? `/?auth=${encodeURIComponent(authToken)}` : ''}`}
+                    src={getMachineUrl(activeMachine)}
                     className="absolute inset-0 w-full h-full border-0"
                     title={`Arquivos — ${activeMachine.name}`}
                     sandbox="allow-same-origin allow-scripts allow-forms allow-popups"

@@ -13,12 +13,13 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
       setAuthenticated(!!session);
       setChecking(false);
     });
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setAuthenticated(!!session);
+      setChecking(false);
     });
     return () => subscription.unsubscribe();
   }, []);

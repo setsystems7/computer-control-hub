@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Monitor, FolderOpen, X, Maximize2, Minimize2, RefreshCw, Shield, Copy, ExternalLink, Home, Settings, UserSquare2, Server } from "lucide-react";
+import { Monitor, FolderOpen, X, Maximize2, Minimize2, RefreshCw, Copy, ExternalLink, Home, Settings, UserSquare2, Server } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,7 +30,7 @@ const Index = () => {
   const [activeMachine, setActiveMachine] = useState<Machine | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
-  const [authToken, setAuthToken] = useState<string | null>(null);
+  
   const [anydeskMachine, setAnydeskMachine] = useState<Machine | null>(null);
   const [connectingMachine, setConnectingMachine] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("home");
@@ -41,8 +41,6 @@ const Index = () => {
     !["localhost", "127.0.0.1"].includes(window.location.hostname);
 
   const canEmbedInPanel = !isPublicHttps;
-  const FB_USER = "admin";
-  const FB_PASS = "MinhaSenh@123";
   const getMachineUrl = (machine: Machine) => `http://${machine.ip}:8080`;
 
   useEffect(() => {
@@ -371,7 +369,7 @@ const Index = () => {
                 <div className="flex-1 relative bg-black">
                   <iframe
                     key={iframeKey}
-                    src={`${getMachineUrl(activeMachine)}${authToken ? `/?auth=${encodeURIComponent(authToken)}` : ''}`}
+                    src={getMachineUrl(activeMachine)}
                     className="absolute inset-0 w-full h-full border-0"
                     title={`Arquivos — ${activeMachine.name}`}
                     sandbox="allow-same-origin allow-scripts allow-forms allow-popups"

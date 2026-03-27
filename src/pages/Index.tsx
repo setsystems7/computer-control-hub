@@ -294,7 +294,12 @@ const Index = () => {
                     <Button
                       variant="outline"
                       className="w-full h-12 rounded-xl text-sm font-semibold border-primary/20 hover:border-primary/50"
-                      onClick={() => window.open(`https://my.anydesk.com/v2`, "_blank", "noopener,noreferrer")}
+                      onClick={() => {
+                        navigator.clipboard.writeText(anydeskMachine.anydeskId).then(() => {
+                          toast({ title: "ID copiado!", description: `Cole o ID ${anydeskMachine.anydeskId} no campo de conexão do AnyDesk Web.` });
+                        }).catch(() => {});
+                        window.open(`https://start.anydesk.com`, "_blank", "noopener,noreferrer");
+                      }}
                     >
                       <ExternalLink size={16} className="mr-2 text-primary" />
                       Abrir AnyDesk Web (sem instalar)

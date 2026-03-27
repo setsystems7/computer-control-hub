@@ -144,7 +144,7 @@ const Index = () => {
               </div>
               <div className="flex flex-col">
                 <h1 className="text-xl font-bold tracking-tight leading-tight">Painel de Computadores</h1>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium"><p className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Central de Computadores</p></p>
+                <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Central de Computadores</span>
               </div>
             </div>
             

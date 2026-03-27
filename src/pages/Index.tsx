@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Monitor, FolderOpen, X, Maximize2, Minimize2, RefreshCw, Shield, Copy, ExternalLink, Home, Settings, UserSquare2, Server } from "lucide-react";
+import { Monitor, FolderOpen, X, RefreshCw, Copy, ExternalLink, Home, Settings, UserSquare2, Server } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 

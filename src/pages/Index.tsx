@@ -30,7 +30,7 @@ const Index = () => {
   const [activeMachine, setActiveMachine] = useState<Machine | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
-  const [authToken, setAuthToken] = useState<string | null>(null);
+  
   const [anydeskMachine, setAnydeskMachine] = useState<Machine | null>(null);
   const [connectingMachine, setConnectingMachine] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("home");
